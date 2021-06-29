@@ -6,5 +6,7 @@ namespace Wizlib_Model.Models
     {
         public int BookId { get; set; }
         public int AuthorId { get; set; }
+        public FluentBook Book { get; set; }
+        public FluentAuthor Author { get; set; }
     }
 }

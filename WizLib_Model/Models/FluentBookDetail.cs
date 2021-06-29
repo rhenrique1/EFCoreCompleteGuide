@@ -8,5 +8,6 @@ namespace Wizlib_Model.Models
         public int NumberOfChapters { get; set; }
         public int NumberOfPages { get; set; }
         public double Weight { get; set; }
+        public FluentBook Book { get; set; }
     }
 }

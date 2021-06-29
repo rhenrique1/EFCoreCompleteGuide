@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using WizLib_DataAccess.FluentConfig;
 using Wizlib_Model.Models;
 
 namespace WizLib_DataAccess.Data
@@ -16,24 +17,25 @@ namespace WizLib_DataAccess.Data
         public DbSet<Author> Authors { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<BookAuthor> BookAuthors { get; set; }
+        public DbSet<FluentBook> FluentBooks { get; set; }
         public DbSet<FluentBookDetail> FluentBookDetails { get; set; }
-        // public DbSet<FluentAuthor> FluentAuthors { get; set; }
-        // public DbSet<FluentPublisher> FluentPublishers { get; set; }
+        public DbSet<FluentAuthor> FluentAuthors { get; set; }
+        public DbSet<FluentPublisher> FluentPublishers { get; set; }
         // public DbSet<FluentBookAuthor> FluentBookAuthors { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Category table name an column name
+            modelBuilder.Entity<Category>().ToTable("tbl_category");
+            modelBuilder.Entity<Category>().Property(c => c.Name).HasColumnName("CategoryName");
+
             //composite key
             modelBuilder.Entity<BookAuthor>().HasKey(ba => new { ba.AuthorId, ba.BookId });
 
-            //BookDetails
-            modelBuilder.Entity<FluentBookDetail>().HasKey(b => b.Id);
-            modelBuilder.Entity<FluentBookDetail>().Property(b => b.NumberOfChapters).IsRequired();
-
-            //Book
-            modelBuilder.Entity<FluentBook>().HasKey(b => b.Id);
-            modelBuilder.Entity<FluentBook>().Property(b => b.ISBN).IsRequired().HasMaxLength(15);
-            modelBuilder.Entity<FluentBook>().Property(b => b.Title).IsRequired();
-            modelBuilder.Entity<FluentBook>().Property(b => b.Price).IsRequired();
+            modelBuilder.ApplyConfiguration(new FluentBookConfig());
+            modelBuilder.ApplyConfiguration(new FluentBookDetailsConfig());
+            modelBuilder.ApplyConfiguration(new FluentBookAuthorConfig());
+            modelBuilder.ApplyConfiguration(new FluentPublisherConfig());
+            modelBuilder.ApplyConfiguration(new FluentAuthorConfig());
         }
     }
 }
