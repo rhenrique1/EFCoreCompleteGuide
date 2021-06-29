@@ -2,7 +2,7 @@
 
 namespace WizLib_DataAccess.Migrations
 {
-    public partial class AddGenreTableToDb : Migration
+    public partial class AddForeignKeyAnnotationToBookAuthor : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

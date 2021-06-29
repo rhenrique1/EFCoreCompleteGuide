@@ -2,28 +2,30 @@
 
 namespace WizLib_DataAccess.Migrations
 {
-    public partial class RemoveDisplayOrderColFromGenreTable : Migration
+    public partial class AddFluentBookDetailsToDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Genres",
+                name: "FluentBookDetails",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GenreName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    NumberOfChapters = table.Column<int>(type: "int", nullable: false),
+                    NumberOfPages = table.Column<int>(type: "int", nullable: false),
+                    Weight = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Genres", x => x.Id);
+                    table.PrimaryKey("PK_FluentBookDetails", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Genres");
+                name: "FluentBookDetails");
         }
     }
 }

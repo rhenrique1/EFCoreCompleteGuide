@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Wizlib_Model.Models
 {
     public class Genre
