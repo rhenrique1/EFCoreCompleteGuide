@@ -23,13 +23,16 @@
           <th>
             Title
           </th>
+          <th>
+            Price
+          </th>
 
-          @*<th>
+          <th>
             Publisher
             </th>
-            <th>
+            @* <th>
             Authors
-            </th>*@
+            </th> *@
           <th></th>
         </tr>
         @foreach (var item in Model)
@@ -38,11 +41,12 @@
             <td>
               @item.Title
             </td>
-            @*<td>
+            <td>
+              @item.Price
+            </td>
+            <td>
               @item.Publisher.Name
-              </td>
-              <td>
-              @{
+              @* @{
               var authors = "";
               }
               @foreach(var auth in item.BookAuthors)
@@ -50,7 +54,7 @@
               authors += @auth.Author.FullName + ", ";
               }
               @authors.Trim().TrimEnd(',')
-              </td>*@
+              </td> *@
             <td>
               <a class="btn btn-primary text-white" asp-action="Upsert" asp-route-Id="@item.Id">
                 Edit

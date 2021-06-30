@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Wizlib_Model.Models;
-using System.Web.Mvc;
 
 namespace Wizlib_Model.ViewModels
 {

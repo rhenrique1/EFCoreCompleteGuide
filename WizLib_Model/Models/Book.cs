@@ -20,7 +20,7 @@ namespace Wizlib_Model.Models
         public double Price { get; set; }
 
         [ForeignKey("BookDetail")]
-        public int BookDetailId { get; set; }
+        public int? BookDetailId { get; set; }
         public BookDetail BookDetail { get; set; }
 
         [ForeignKey("Publisher")]
