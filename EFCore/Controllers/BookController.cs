@@ -209,22 +209,40 @@ namespace WizLib.Controllers
 
             // var bookCount2 = _db.Books.Count();
 
-            IEnumerable<Book> BookList1 = _db.Books;
-            var FilteredBook1 = BookList1.Where(b => b.Price > 500).ToList();
+            // IEnumerable<Book> BookList1 = _db.Books;
+            // var FilteredBook1 = BookList1.Where(b => b.Price > 500).ToList();
 
-            IQueryable<Book> BookList2 = _db.Books;
-            var FilteredBook2 = BookList2.Where(b => b.Price > 500).ToList();
+            // IQueryable<Book> BookList2 = _db.Books;
+            // var FilteredBook2 = BookList2.Where(b => b.Price > 500).ToList();
 
-            //Updating Related Data
-            var bookTemp1 = _db.Books.Include(b => b.BookDetail).FirstOrDefault(b => b.Id == 2);
-            bookTemp1.BookDetail.NumberOfChapters = 2222;
-            _db.Books.Update(bookTemp1);
-            _db.SaveChanges();
+            // //Updating Related Data
+            // var bookTemp1 = _db.Books.Include(b => b.BookDetail).FirstOrDefault(b => b.Id == 2);
+            // bookTemp1.BookDetail.NumberOfChapters = 2222;
+            // _db.Books.Update(bookTemp1);
+            // _db.SaveChanges();
 
-            var bookTemp2 = _db.Books.Include(b => b.BookDetail).FirstOrDefault(b => b.Id == 2);
-            bookTemp2.BookDetail.Weight = 3333;
-            _db.Books.Attach(bookTemp2);
-            _db.SaveChanges();
+            // var bookTemp2 = _db.Books.Include(b => b.BookDetail).FirstOrDefault(b => b.Id == 2);
+            // bookTemp2.BookDetail.Weight = 3333;
+            // _db.Books.Attach(bookTemp2);
+            // _db.SaveChanges();
+
+            //VIEWS
+            var viewList = _db.BookDetailsFromView.ToList();
+            var viewList1 = _db.BookDetailsFromView.FirstOrDefault();
+            var viewList2 = _db.BookDetailsFromView.Where(u => u.Price > 500);
+
+            //RAW SQL
+            var bookRaw = _db.Books.FromSqlRaw("SELECT * FROM dbo.books").ToList();
+
+            //SQL INJECTION attack prone
+            int id = 1;
+            var bookTemp1 = _db.Books.FromSqlInterpolated($"SELECT * FROM dbo.books WHERE id = {id}").ToList();
+
+            var booksSproc = _db.Books.FromSqlInterpolated($" EXEC dbo.GetAllBookDetails {id}").ToList();
+
+            //.NET 5 only 
+            var bookFilter1 = _db.Books.Include(e => e.BookAuthors.Where(p => p.AuthorId == 1)).ToList();
+            var bookFilter2 = _db.Books.Include(e => e.BookAuthors.OrderByDescending(p => p.AuthorId).Take(5)).ToList();
 
             return RedirectToAction(nameof(Index));
         }
